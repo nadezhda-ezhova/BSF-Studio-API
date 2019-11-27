@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bsf-api
+  namespace: api
+  labels:
+    app:  bsf
+    role: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:  bsf
+      role: api
+  template:
+    metadata:
+      labels:
+        app:  bsf
+        role: api
+    spec:
+      containers:
+      - name: app
+        image: eu.gcr.io/bsf-studio/bsf-api:{{VERSION}}
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 3000
+        env:
+          - name:  PORT
+            value: '3000'
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: bsf-api
+  namespace: api
+spec:
+  type: LoadBalancer
+  selector:
+    app:  bsf
+    role: api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
