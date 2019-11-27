@@ -1,4 +1,4 @@
-# BSF-MRA36-API
+# BSF-Studio-API
 _Don't forget to update application version number in **package.json** before push new version into repo_
 
 ## Init project
